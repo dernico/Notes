@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.Modal.EditNoteView">
+  
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"></RowDefinition>
+      <RowDefinition Height="*"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+    </Grid.RowDefinitions>
+    <StackLayout Grid.Row="0" Padding="20">
+      <Entry Text="{Binding Title}" Placeholder="Title"></Entry>
+    </StackLayout>
+    <StackLayout Grid.Row="1" Padding="20" VerticalOptions="EndAndExpand">
+      <Editor Text="{Binding Content}"></Editor>
+    </StackLayout>
+    <StackLayout Grid.Row="2" Padding="20" Orientation="Horizontal">
+      <Button Text="Save" Command="{Binding Save}"></Button>
+      <Button Text="Delete" Command="{Binding Delete}" IsEnabled="{Binding IsEdit}"></Button>
+    </StackLayout>
+  </Grid>
+  
+</ContentPage>

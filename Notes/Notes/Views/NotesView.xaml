@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.NotesView">
+
+  <Grid>
+    <Grid.Padding>
+      <OnPlatform x:TypeArguments="Thickness"
+                iOS="20, 40, 20, 20"
+                Android="20, 20, 20, 20"
+                WinPhone="20, 20, 20, 20" />
+    </Grid.Padding>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"></RowDefinition>
+      <RowDefinition Height="Auto"></RowDefinition>
+    </Grid.RowDefinitions>
+    <ListView Grid.Row="0" 
+              ItemsSource="{Binding Notes}" 
+              SelectedItem="{Binding SelectedNote}"
+              RowHeight="100">
+      <ListView.ItemTemplate >
+        <DataTemplate>
+          <ViewCell>
+            <ViewCell.View>
+
+              <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"></RowDefinition>
+                  <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0"
+                       Text="{Binding title}"
+                       FontAttributes="Bold"
+                       FontSize="14"></Label>
+
+                <Editor Grid.Row="1"
+                        Text="{Binding content}"
+                        IsEnabled="False"
+                        FontAttributes="Italic"
+                        FontSize="11"
+                        VerticalOptions="FillAndExpand"></Editor>
+              </Grid>
+
+            </ViewCell.View>
+          </ViewCell>
+        </DataTemplate>
+      </ListView.ItemTemplate>
+    </ListView>
+
+    <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+      <Button Text="Add" Command="{Binding AddNote}"></Button>
+    </StackLayout>
+  </Grid>
+
+
+</ContentPage>
