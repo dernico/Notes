@@ -9,11 +9,11 @@ namespace Notes.Data.Remote
 {
     public interface IRestService
     {
-        Task<UserModel> login(string email, string password);
+        Task<RestResponse<UserModel>> login(string email, string password);
         Task<RestResponse<string>> register(string email, string password);
         Task<List<NoteModel>> loadUserNotes(UserModel user);
-        Task<NoteModel> saveNewNote(UserModel user, NoteModel note);
-        Task<NoteModel> updateNote(UserModel user, NoteModel note);
+        Task<RestResponse<NoteModel>> saveNewNote(UserModel user, NoteModel note);
+        Task<RestResponse<NoteModel>> updateNote(UserModel user, NoteModel note);
         Task<bool> deleteNote(UserModel user, NoteModel note);
     }
 }

@@ -13,11 +13,11 @@ namespace Notes.Data
         UserModel getLocalUser();
         int storeLocalUser(UserModel user);
         void clearLocalUser();
-        Task<UserModel> loginRemote(string email, string password);
+        Task<RestResponse<UserModel>> loginRemote(string email, string password);
         Task<RestResponse<string>> registerRemote(string email, string password);
         Task<List<NoteModel>> loadUserNotes(UserModel user);
-        Task<NoteModel> saveNewNoteRemote(UserModel user, NoteModel note);
-        Task<NoteModel> updateNoteRemote(UserModel user, NoteModel note);
+        Task<RestResponse<NoteModel>> saveNewNoteRemote(UserModel user, NoteModel note);
+        Task<RestResponse<NoteModel>> updateNoteRemote(UserModel user, NoteModel note);
         Task<bool> deleteNoteRemote(UserModel user, NoteModel note);
     }
 }

@@ -37,8 +37,7 @@ namespace Notes.ViewModels
                 Changed("Password");
             }
         }
-
-
+        
         private bool _showLoading;
         public bool ShowLoading {
             get
@@ -49,6 +48,20 @@ namespace Notes.ViewModels
             {
                 _showLoading = value;
                 Changed("ShowLoading");
+            }
+        }
+
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+            set
+            {
+                _errorMessage = value;
+                Changed("ErrorMessage");
             }
         }
 
@@ -66,26 +79,41 @@ namespace Notes.ViewModels
             _nav = DependencyLoader.Singleton<INavigationService>();
         }
 
-        public async void login()
+        private void resetErrorMessage()
+        {
+            ErrorMessage = String.Empty;
+        }
+
+        private async void login()
         {
             ShowLoading = true;
-            var user = await _data.loginRemote(Email, Password);
-            if(user != null)
+            resetErrorMessage();
+            var response = await _data.loginRemote(Email, Password);
+            if(response.Success)
             {
-                int result = _data.storeLocalUser(user);
+                int result = _data.storeLocalUser(response.ResponseObject);
+                _nav.navigateNotes();
+            }
+            else
+            {
+                ErrorMessage = response.Message;
             }
             
             ShowLoading = false;
-            _nav.navigateNotes();
         }
 
-        public async void register()
+        private async void register()
         {
             ShowLoading = true;
+            resetErrorMessage();
             RestResponse<string> resp = await _data.registerRemote(Email, Password);
             if (resp.Success)
             {
                 login();
+            }
+            else
+            {
+                ErrorMessage = resp.Message;
             }
             ShowLoading = false;
         }

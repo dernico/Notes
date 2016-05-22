@@ -15,7 +15,7 @@ namespace Notes.Models
         public string _id { get; set; }
         public string title { get; set; }
         public string content { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
     }
 }

@@ -40,14 +40,19 @@ namespace Notes.Data
             _local.clearUser();
         }
 
-        public async Task<UserModel> loginRemote(string email, string password)
+        public async Task<RestResponse<UserModel>> loginRemote(string email, string password)
         {
-            var user = await _remote.login(email, password);
-            if (user != null)
+            var result = new RestResponse<UserModel>();
+            try
             {
-                return user;
+                result = await _remote.login(email, password);
             }
-            return null;
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.Message = "Could not connect to the service. Try again later :(";
+            }
+            return result;
         }
 
 
@@ -87,30 +92,35 @@ namespace Notes.Data
             }
         }
 
-        public async Task<NoteModel> saveNewNoteRemote(UserModel user, NoteModel note)
+        public async Task<RestResponse<NoteModel>> saveNewNoteRemote(UserModel user, NoteModel note)
         {
+            var response = new RestResponse<NoteModel>();
             try
             {
-                note = await _remote.saveNewNote(user, note);
-                return note;
+                response = await _remote.saveNewNote(user, note);
             }
             catch (Exception)
             {
-                return null;
+                response.Success = false;
+                response.Message = "Connection error. Try again later :(";
             }
+            return response;
         }
 
-        public async Task<NoteModel> updateNoteRemote(UserModel user, NoteModel note)
+        public async Task<RestResponse<NoteModel>> updateNoteRemote(UserModel user, NoteModel note)
         {
+            var response = new RestResponse<NoteModel>();
             try
             {
-                note = await _remote.updateNote(user, note);
-                return note;
+                response = await _remote.updateNote(user, note);
+                return response;
             }
             catch (Exception)
             {
-                return null;
+                response.Success = false;
+                response.Message = "Connection error. Try again later :(";
             }
+            return response;
         }
 
         public async Task<bool> deleteNoteRemote(UserModel user, NoteModel note)

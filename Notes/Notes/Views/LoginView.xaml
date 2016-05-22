@@ -10,6 +10,8 @@
 
     <Button Text="Login" Command="{Binding Login}"></Button>
     <Button Text="Register" Command="{Binding Register}"></Button>
+
+    <Label Text="{Binding ErrorMessage}"></Label>
     
   </StackLayout>
 </ContentPage>
