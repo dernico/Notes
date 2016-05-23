@@ -134,5 +134,20 @@ namespace Notes.Data
                 return false;
             }
         }
+
+        public async Task<RestResponse<List<AutoCompleteOption>>> placesAutoComplete(UserModel user, string input)
+        {
+            RestResponse<List<AutoCompleteOption>> response = new RestResponse<List<AutoCompleteOption>>();
+            try
+            {
+                response = await _remote.placesAutoComplete(user, input);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return response;
+        }
     }
 }

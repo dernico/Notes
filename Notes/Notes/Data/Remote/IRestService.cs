@@ -15,5 +15,6 @@ namespace Notes.Data.Remote
         Task<RestResponse<NoteModel>> saveNewNote(UserModel user, NoteModel note);
         Task<RestResponse<NoteModel>> updateNote(UserModel user, NoteModel note);
         Task<bool> deleteNote(UserModel user, NoteModel note);
+        Task<RestResponse<List<AutoCompleteOption>>> placesAutoComplete(UserModel user, string input);
     }
 }

@@ -163,6 +163,25 @@ namespace Notes.Data.Remote
             }; ;
         }
 
+        public async Task<RestResponse<List<AutoCompleteOption>>> placesAutoComplete(UserModel user, string input)
+        {
+            var url = Constants.PlacesAutoCompleteAddress + "?token=" + user.token;
+            url += "&input=" + input;
 
+            var restresponse = new RestResponse<List<AutoCompleteOption>>();
+            var response = await _http.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(content);
+                var options = json["predictions"].Value<List<AutoCompleteOption>>();
+                restresponse.Success = true;
+                restresponse.ResponseObject = options;
+                return restresponse;
+            }
+            restresponse.Success = false;
+            restresponse.Message = response.ReasonPhrase;
+            return restresponse;
+        }
     }
 }

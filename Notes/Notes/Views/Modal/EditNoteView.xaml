@@ -20,6 +20,7 @@
     <Label Grid.Row="2" Text="{Binding ErrorMessage}"></Label>
     
     <StackLayout Grid.Row="3" Padding="20" Orientation="Horizontal">
+      <Button Text="Add Place" Command="{Binding AddPlace}"></Button>
       <Button Text="Save" Command="{Binding Save}"></Button>
       <Button Text="Delete" Command="{Binding Delete}" IsEnabled="{Binding IsEdit}"></Button>
     </StackLayout>
