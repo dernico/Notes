@@ -20,5 +20,6 @@ namespace Notes.Data
         Task<RestResponse<NoteModel>> updateNoteRemote(UserModel user, NoteModel note);
         Task<bool> deleteNoteRemote(UserModel user, NoteModel note);
         Task<RestResponse<List<AutoCompleteOption>>> placesAutoComplete(UserModel user, string input);
+        Task<RestResponse<PlaceModel>> placesDetails(UserModel user, string placeid);
     }
 }

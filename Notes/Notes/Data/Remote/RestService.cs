@@ -183,5 +183,25 @@ namespace Notes.Data.Remote
             restresponse.Message = response.ReasonPhrase;
             return restresponse;
         }
+
+        public async Task<RestResponse<PlaceModel>> placesDetails(UserModel user, string placeid)
+        {
+            var url = Constants.PlacesDetailsAdress + "?placeId=" + placeid + "&token=" + user.token;
+
+            var restresponse = new RestResponse<PlaceModel>();
+            var response = await _http.GetAsync(url);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var json = JObject.Parse(content);
+                var options = JsonConvert.DeserializeObject<PlaceModel>(json["result"].ToString());
+                restresponse.Success = true;
+                restresponse.ResponseObject = options;
+                return restresponse;
+            }
+            restresponse.Success = false;
+            restresponse.Message = response.ReasonPhrase;
+            return restresponse;
+        }
     }
 }

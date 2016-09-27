@@ -14,13 +14,14 @@ using Notes.CustomRenderer;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using Notes.Droid.CustomRenderer;
+using Android.Text;
+using Java.Lang;
 
 [assembly: ExportRenderer(typeof(AutocompleteTextBox), typeof(AutocompleteTextBoxRenderer))]
 namespace Notes.Droid.CustomRenderer
 {
     class AutocompleteTextBoxRenderer : ViewRenderer<AutocompleteTextBox, AutoCompleteTextView>
     {
-
         protected override void OnElementChanged(ElementChangedEventArgs<AutocompleteTextBox> e)
         {
             base.OnElementChanged(e);
@@ -28,8 +29,10 @@ namespace Notes.Droid.CustomRenderer
             if(Control == null)
             {
                 SetNativeControl(new AutoCompleteTextView(Context));
+
                 Control.Text = Element.Text;
-                Control.TextChanged += Control_TextChanged;
+                Control.TextChanged += On_TextChanged;
+                Control.ItemSelected += On_ItemSelected;
             }
 
             if(e.NewElement != null)
@@ -38,7 +41,14 @@ namespace Notes.Droid.CustomRenderer
             }
         }
 
-        private void Control_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
+        private void On_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            var selected = Element.AutocompleteOptions[e.Position];
+            Element.Text = selected.Description;
+            Element.SelectedOption = selected;
+        }
+
+        private void On_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
         {
             SetText();
         }
@@ -58,8 +68,9 @@ namespace Notes.Droid.CustomRenderer
             {
                 ArrayAdapter autoCompleteAdapter = new ArrayAdapter(Context, 
                     Android.Resource.Layout.SimpleDropDownItem1Line,
-                    Element.AutocompleteOptions);
+                    Element.AutocompleteOptions.Select(a => a.Description).ToList());
                 Control.Adapter = autoCompleteAdapter;
+                
             }
             
         }

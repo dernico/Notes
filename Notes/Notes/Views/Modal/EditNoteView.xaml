@@ -11,11 +11,10 @@
       <RowDefinition Height="Auto"></RowDefinition>
     </Grid.RowDefinitions>
     <StackLayout Grid.Row="0" Padding="20">
-      <!--<Entry x:Name="titleEntry" Text="{Binding Title}" Placeholder="Title" AutocompleteOptions="{Binding Options}"></Entry>-->
-      <cr:AutocompleteTextBox x:Name="titleEntry" Text="{Binding Title}" AutocompleteOptions="{Binding Options}"></cr:AutocompleteTextBox>
+      <cr:AutocompleteTextBox Text="{Binding Title}" AutocompleteOptions="{Binding Options}" SelectedOption="{Binding SelectedOption}"></cr:AutocompleteTextBox>
     </StackLayout>
-    <StackLayout Grid.Row="1" Padding="20" VerticalOptions="EndAndExpand">
-      <Editor Text="{Binding Content}"></Editor>
+    <StackLayout Grid.Row="1" Padding="20" VerticalOptions="FillAndExpand">
+      <Editor Text="{Binding NoteContent}" VerticalOptions="FillAndExpand"></Editor>
     </StackLayout>
     <StackLayout Grid.Row="2" Padding="20" Orientation="Horizontal">
       <Button Text="Save" Command="{Binding Save}"></Button>

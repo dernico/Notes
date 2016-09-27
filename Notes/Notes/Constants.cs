@@ -20,5 +20,6 @@ namespace Notes
         public static string UpdateNoteAddress = HostAddress + "/updatenote";
         public static string DeleteNoteAddress = HostAddress + "/deletenote";
         public static string PlacesAutoCompleteAddress = HostAddress + "/places/autocomplete";
+        public static string PlacesDetailsAdress = HostAddress + "/places/details";
     }
 }

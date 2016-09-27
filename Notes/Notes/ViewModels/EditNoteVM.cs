@@ -50,8 +50,8 @@ namespace Notes.ViewModels
             }
         }
 
-        public List<string> _options;
-        public List<string> Options
+        public List<AutoCompleteOption> _options;
+        public List<AutoCompleteOption> Options
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Notes.ViewModels
             }
         }
         
-        public string Content
+        public string NoteContent
         {
             get
             {
@@ -74,7 +74,22 @@ namespace Notes.ViewModels
             set
             {
                 _note.content = value;
-                Changed("Content");
+                Changed("NoteContent");
+            }
+        }
+
+        private AutoCompleteOption _selectedOption;
+        public AutoCompleteOption SelectedOption
+        {
+            get
+            {
+                return _selectedOption;
+            }
+            set
+            {
+                _selectedOption = value;
+                EditContent();
+                Changed("SelectedOption");
             }
         }
 
@@ -152,7 +167,35 @@ namespace Notes.ViewModels
             var response = await _data.placesAutoComplete(user, _note.title);
             if (response.Success)
             {
-                Options = response.ResponseObject.Select(p => p.Description).ToList();
+                Options = response.ResponseObject.ToList();
+            }
+        }
+
+        private async void EditContent()
+        {
+            var user = _data.getLocalUser();
+            var placeid = SelectedOption.PlaceId;
+            var response = await _data.placesDetails(user, placeid);
+            if (response.Success)
+            {
+                var place = response.ResponseObject;
+                var content = place.Name;
+                content += "\nLocated at: " + place.Address;
+                content += "\nPhone: " + place.PhoneNumber;
+                if(place.OpeningsWeekdays != null)
+                {
+                    content += "\nOpening Hours: ";
+                    foreach (var weekday in place.OpeningsWeekdays)
+                    {
+                        content += "\n" + weekday;
+                    }
+                    content += "\nOpening Hours: " + place;
+                }
+                NoteContent = content;
+            }
+            else
+            {
+                ErrorMessage = response.Message;
             }
         }
     }

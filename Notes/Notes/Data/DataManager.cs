@@ -149,5 +149,21 @@ namespace Notes.Data
             }
             return response;
         }
+
+        public async Task<RestResponse<PlaceModel>> placesDetails(UserModel user, string placeid)
+        {
+            var response = new RestResponse<PlaceModel>();
+
+            try
+            {
+                response = await _remote.placesDetails(user, placeid);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = ex.ToString();
+            }
+            return response;
+        }
     }
 }
