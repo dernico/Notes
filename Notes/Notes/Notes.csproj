@@ -47,6 +47,7 @@
     <Compile Include="Data\Remote\IRestService.cs" />
     <Compile Include="Data\Remote\RestResponse.cs" />
     <Compile Include="Data\Remote\RestService.cs" />
+    <Compile Include="Models\AutoCompleteOption.cs" />
     <Compile Include="Models\MasterPageItem.cs" />
     <Compile Include="Models\NoteModel.cs" />
     <Compile Include="Models\NotesResult.cs" />

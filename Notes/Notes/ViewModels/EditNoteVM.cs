@@ -1,4 +1,5 @@
 ﻿using Notes.Data;
+using Notes.Data.Remote;
 using Notes.Models;
 using Notes.Services;
 using System;
@@ -77,6 +78,20 @@ namespace Notes.ViewModels
             }
         }
 
+        private string _errorMessage;
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+            set
+            {
+                _errorMessage = value;
+                Changed("ErrorMessage");
+            }
+        }
+
         public ICommand Save { get; set; }
         public ICommand Delete { get; set; }
 
@@ -99,28 +114,42 @@ namespace Notes.ViewModels
         private async void save()
         {
             var user = _data.getLocalUser();
+            RestResponse<NoteModel> response;
             if (IsEdit)
             {
-                _note = await _data.updateNoteRemote(user, _note);
+                response = await _data.updateNoteRemote(user, _note);
             }
             else
             {
-                _note = await _data.saveNewNoteRemote(user, _note);
+                response = await _data.saveNewNoteRemote(user, _note);
             }
-            _nav.navigateNotes();
+
+            if (response.Success)
+            {
+                _nav.navigateNotes();
+            }
+            else
+            {
+                ErrorMessage = response.Message;
+            }
+
         }
 
         private async void delete()
         {
             var user = _data.getLocalUser();
             var success = await _data.deleteNoteRemote(user, _note);
+            if (!success)
+            {
+                //TODO: make success an RestResponse
+            }
             _nav.navigateNotes();
         }
 
         private async void CallAutoComplete()
         {
             var user = _data.getLocalUser();
-            var response = await _data.placesAutocomplete(user, _note.title);
+            var response = await _data.placesAutoComplete(user, _note.title);
             if (response.Success)
             {
                 Options = response.ResponseObject.Select(p => p.Description).ToList();
