@@ -1,4 +1,5 @@
-﻿using Notes.Models;
+﻿using Notes.CustomRenderer;
+using Notes.Models;
 using Notes.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,16 @@ namespace Notes.Views.Modal
             {
                 BindingContext = new EditNoteVM(note);
             }
+
+            AutocompleteTextBox entry = this.FindByName<AutocompleteTextBox>("titleEntry");
+            entry.TextChanged += Entry_TextChanged;
+        }
+
+        private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (e.NewTextValue == e.OldTextValue) return;
+
+            //((EditNoteVM)BindingContext).Title = e.NewTextValue;
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Notes.Data;
-using Notes.Data.Remote;
 using Notes.Models;
 using Notes.Services;
 using System;
@@ -39,8 +38,28 @@ namespace Notes.ViewModels
 
             set
             {
+                if(_note.title == value)
+                {
+                    return;
+                }
+
                 _note.title = value;
+                CallAutoComplete();
                 Changed("Title");
+            }
+        }
+
+        public List<string> _options;
+        public List<string> Options
+        {
+            get
+            {
+                return _options;
+            }
+            set
+            {
+                _options = value;
+                Changed("Options");
             }
         }
         
@@ -55,20 +74,6 @@ namespace Notes.ViewModels
             {
                 _note.content = value;
                 Changed("Content");
-            }
-        }
-
-        private string _errorMessage;
-        public string ErrorMessage
-        {
-            get
-            {
-                return _errorMessage;
-            }
-            set
-            {
-                _errorMessage = value;
-                Changed("ErrorMessage");
             }
         }
 
@@ -94,35 +99,32 @@ namespace Notes.ViewModels
         private async void save()
         {
             var user = _data.getLocalUser();
-            RestResponse<NoteModel> response;
             if (IsEdit)
             {
-                response = await _data.updateNoteRemote(user, _note);
+                _note = await _data.updateNoteRemote(user, _note);
             }
             else
             {
-                response = await _data.saveNewNoteRemote(user, _note);
+                _note = await _data.saveNewNoteRemote(user, _note);
             }
-
-            if (response.Success)
-            {
-                _nav.navigateNotes();
-            }else
-            {
-                ErrorMessage = response.Message;
-            }
-            
+            _nav.navigateNotes();
         }
 
         private async void delete()
         {
             var user = _data.getLocalUser();
             var success = await _data.deleteNoteRemote(user, _note);
-            if (!success)
-            {
-                //TODO: make success an RestResponse
-            }
             _nav.navigateNotes();
+        }
+
+        private async void CallAutoComplete()
+        {
+            var user = _data.getLocalUser();
+            var response = await _data.placesAutocomplete(user, _note.title);
+            if (response.Success)
+            {
+                Options = response.ResponseObject.Select(p => p.Description).ToList();
+            }
         }
     }
 }

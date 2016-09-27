@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Droid", "Notes\Notes.Droid\Notes.Droid.csproj", "{F4E2BC0C-AC95-44B0-A5AB-59234B30F27D}"
 EndProject
@@ -14,12 +14,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes.Windows", "Notes\Notes.Windows\Notes.Windows.csproj", "{9B894F85-1325-45D5-8564-B48E057462B2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Notes", "Notes\Notes\Notes.csproj", "{634D32E3-7EFF-4450-8F80-A2151BCF2742}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{97C0F7BB-AD22-417C-8F3E-759E91A57CD0}"
-	ProjectSection(SolutionItems) = preProject
-		LICENSE = LICENSE
-		README.md = README.md
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -262,6 +256,8 @@ Global
 		{CA446C8A-21D6-43AA-B5AE-1B6BB1DFDFDA}.AppStore|x86.Build.0 = Release|x86
 		{CA446C8A-21D6-43AA-B5AE-1B6BB1DFDFDA}.AppStore|x86.Deploy.0 = Release|x86
 		{CA446C8A-21D6-43AA-B5AE-1B6BB1DFDFDA}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{CA446C8A-21D6-43AA-B5AE-1B6BB1DFDFDA}.Debug|Any CPU.Build.0 = Debug|x86
+		{CA446C8A-21D6-43AA-B5AE-1B6BB1DFDFDA}.Debug|Any CPU.Deploy.0 = Debug|x86
 		{CA446C8A-21D6-43AA-B5AE-1B6BB1DFDFDA}.Debug|ARM.ActiveCfg = Debug|ARM
 		{CA446C8A-21D6-43AA-B5AE-1B6BB1DFDFDA}.Debug|ARM.Build.0 = Debug|ARM
 		{CA446C8A-21D6-43AA-B5AE-1B6BB1DFDFDA}.Debug|ARM.Deploy.0 = Debug|ARM
