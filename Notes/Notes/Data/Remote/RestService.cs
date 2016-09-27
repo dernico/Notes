@@ -166,7 +166,7 @@ namespace Notes.Data.Remote
         public async Task<RestResponse<List<AutoCompleteOption>>> placesAutoComplete(UserModel user, string input)
         {
             var url = Constants.PlacesAutoCompleteAddress + "?token=" + user.token;
-            url += "&input=" + input;
+            url += "&q=" + input;
 
             var restresponse = new RestResponse<List<AutoCompleteOption>>();
             var response = await _http.GetAsync(url);
@@ -174,7 +174,7 @@ namespace Notes.Data.Remote
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var json = JObject.Parse(content);
-                var options = json["predictions"].Value<List<AutoCompleteOption>>();
+                var options = JsonConvert.DeserializeObject<List<AutoCompleteOption>>(json["predictions"].ToString());
                 restresponse.Success = true;
                 restresponse.ResponseObject = options;
                 return restresponse;

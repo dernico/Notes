@@ -9,7 +9,7 @@ namespace Notes
     public class Constants
     {
 #if DEBUG
-        public static string HostAddress = "http://10.6.0.35:8000";
+        public static string HostAddress = "http://192.168.0.176:8000";
 #else
         public static string HostAddress = "http://niconotes.herokuapp.com";
 #endif

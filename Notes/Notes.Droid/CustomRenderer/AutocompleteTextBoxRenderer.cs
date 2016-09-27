@@ -28,6 +28,7 @@ namespace Notes.Droid.CustomRenderer
             if(Control == null)
             {
                 SetNativeControl(new AutoCompleteTextView(Context));
+                Control.Text = Element.Text;
                 Control.TextChanged += Control_TextChanged;
             }
 
@@ -39,17 +40,13 @@ namespace Notes.Droid.CustomRenderer
 
         private void Control_TextChanged(object sender, Android.Text.TextChangedEventArgs e)
         {
-            Element.Text = Control.Text;
+            SetText();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
             if(e.PropertyName == AutocompleteTextBox.AutocompleteOptionsProperty.PropertyName)
-            {
-                SetValues();
-            }
-            if(e.PropertyName == AutocompleteTextBox.TextProperty.PropertyName)
             {
                 SetValues();
             }
@@ -65,6 +62,14 @@ namespace Notes.Droid.CustomRenderer
                 Control.Adapter = autoCompleteAdapter;
             }
             
+        }
+
+        private void SetText()
+        {
+            if (Control.Text == null) return;
+            if (Element.Text == Control.Text) return;
+
+            Element.Text = Control.Text;
         }
     }
 }

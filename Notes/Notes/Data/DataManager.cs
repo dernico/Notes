@@ -142,10 +142,10 @@ namespace Notes.Data
             {
                 response = await _remote.placesAutoComplete(user, input);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                response.Success = false;
+                response.Message = ex.ToString();
             }
             return response;
         }
